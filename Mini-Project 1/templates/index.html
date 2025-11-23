@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Score Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<h1 class="title">Student Score Predictor</h1>
+
+<div class="card">
+
+    <!-- LEFT SIDE FORM -->
+    <div class="left">
+
+        <form action="/predict" method="post">
+
+            <label>Student Name</label>
+            <input type="text" name="student_name" required>
+
+
+            <label>Study Hours</label>
+            <input type="number" step="0.1" name="study_hours" required>
+
+            <label>Attendance (%)</label>
+            <input type="number" name="attendance" required>
+
+            <label>Sleep Hours</label>
+            <input type="number" step="0.1" name="sleep_hours" required>
+
+            <label>Social Media Hours</label>
+            <input type="number" step="0.1" name="social_media" required>
+
+            <label>Mental Health Rating (0–10)</label>
+            <input type="number" min="0" max="10" name="mental_health_rating" required>
+
+            <label>Exercise Frequency</label>
+            <select name="exercise_frequency">
+                <option value="0">Low</option>
+                <option value="1">Medium</option>
+                <option value="2">High</option>
+            </select>
+
+            <button type="submit" class="predict-btn">Predict Score</button>
+
+        </form>
+
+    </div>
+
+    <!-- RIGHT SIDE RESULT -->
+    <div class="right">
+
+        {% if prediction is not none %}
+        <h2>Predicted Score</h2>
+
+        <div class="circle"
+             style="background: conic-gradient(
+                 #2ea8c7 {{ percent }}%, 
+                 #e6e6e6 {{ remaining }}%
+             );">
+
+            <div class="inner">
+                <div class="number">{{ prediction }}</div>
+            </div>
+        </div>
+
+        <p class="confidence">Confidence: {{ confidence }}%</p>
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
